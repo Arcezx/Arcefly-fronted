@@ -7,15 +7,14 @@ import { HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = `${environment.apiBaseUrl}/api`; // Usa la URL de environment
 
-  constructor(private http: HttpClient) {}
+constructor(private http: HttpClient) {}
 
 enviarIncidente(data: any): Observable<any> {
-  return this.http.post(`${this.baseUrl}/incidentes`, data, {
-    headers: new HttpHeaders({
+  return this.http.post(`${environment.apiBaseUrl}/api/incidentes`, data, {
+    headers: {
       'Content-Type': 'application/json'
-    })
+    }
   });
 }
 }
