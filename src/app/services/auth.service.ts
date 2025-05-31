@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 interface LoginResponse {
   success: boolean;
@@ -29,33 +30,46 @@ interface Usuario {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = `${environment.apiBaseUrl}/api/auth`;
 
   constructor(private http: HttpClient) {}
 
+  get currentUser(): Usuario | null {
+    const user = sessionStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  }
+
   get isAuthenticated(): boolean {
-    return !!sessionStorage.getItem('user');
+    return !!this.currentUser;
+  }
+
+  get userRole(): string | null {
+    return this.currentUser?.tipo_usuario || null;
   }
 
   login(credentials: { email: string, password: string }): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials).pipe(
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         if (response.success && response.user) {
-          sessionStorage.setItem('user', JSON.stringify(response.user));
+          const userData: Usuario = {
+            id_usuario: response.user.idUsuario,
+            nombre: response.user.nombre,
+            email: response.user.email,
+            tipo_usuario: response.user.tipoUsuario,
+            last_login: response.user.last_login
+          };
+          sessionStorage.setItem('user', JSON.stringify(userData));
         }
       })
     );
   }
 
-  isLoggedIn(): boolean {
-    return this.isAuthenticated;
-  }
-
- 
-
   logout(): void {
     sessionStorage.removeItem('user');
   }
-  
- 
+
+  // Método para verificar roles (útil para mostrar/ocultar elementos en UI)
+  hasRole(role: string): boolean {
+    return this.userRole === role;
+  }
 }

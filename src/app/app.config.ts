@@ -1,18 +1,24 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { provideLottieOptions } from 'ngx-lottie';
 import player from 'lottie-web';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { provideToastr } from 'ngx-toastr';
+import { authInterceptor } from './interceptors/auth.interceptor';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([authInterceptor]) // Ahora usa la función interceptor
+    ),
     provideAnimations(),
-    provideLottieOptions({ player: () => player }),
+    provideLottieOptions({ 
+      player: () => player 
+    }),
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
     provideToastr({
       timeOut: 3000,
@@ -20,9 +26,12 @@ export const appConfig: ApplicationConfig = {
       preventDuplicates: true,
       progressBar: true,
       closeButton: true,
-      toastClass: 'custom-toast', // Clase CSS personalizada
+      toastClass: 'custom-toast',
       iconClasses: {
-        success: 'toast-success-icon', // Clase para ícono de éxito
+        success: 'toast-success-icon',
+        error: 'toast-error-icon',
+        info: 'toast-info-icon',
+        warning: 'toast-warning-icon'
       },
     }),
   ],
