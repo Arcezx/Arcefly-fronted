@@ -11,10 +11,10 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { 
     path: 'panel', 
-    component: PanelComponent, 
+    component: PanelComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', component: TablaViajesComponent }, 
+      { path: '', redirectTo: 'viajes', pathMatch: 'full' }, 
       { path: 'viajes', component: TablaViajesComponent },
       { path: 'clientes', component: TablaClientesComponent },
       { path: 'reservas', component: TablaReservasComponent },
@@ -22,5 +22,5 @@ export const routes: Routes = [
     ]
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login' } // Ruta por defecto para errores
+  { path: '**', redirectTo: 'login' }
 ];

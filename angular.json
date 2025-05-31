@@ -42,7 +42,8 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets/"
-              }
+              },
+              "src/redirects"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
