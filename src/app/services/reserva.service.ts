@@ -4,12 +4,12 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Reserva } from '../models/reserva.model';
 import { catchError, of } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class ReservaService {
-  private apiUrl = 'http://localhost:8080/api/reservas';
+  private apiUrl = `${environment.apiBaseUrl}/api/reservas`;
   private reservasSubject = new BehaviorSubject<Reserva[]>([]);
   reservas$ = this.reservasSubject.asObservable();
 

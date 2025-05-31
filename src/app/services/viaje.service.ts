@@ -5,12 +5,12 @@ import { Viaje } from '../models/viaje.model';
 import { ViajeBackendResponse } from '../models/viaje-response.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class ViajeService {
-  private apiUrl = 'http://localhost:8080/api/viajes';
+  private apiUrl = `${environment.apiBaseUrl}/api/viajes`;
   private viajesUpdatedSource = new Subject<void>();
   
   // Observable para que los componentes se suscriban
