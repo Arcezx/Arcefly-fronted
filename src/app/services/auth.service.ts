@@ -72,4 +72,8 @@ export class AuthService {
   hasRole(role: string): boolean {
     return this.userRole === role;
   }
+    isLoggedIn(): boolean {
+    return this.isAuthenticated;
+  }
+
 }

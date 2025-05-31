@@ -5,7 +5,12 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+.message {
+  color: #ff4444; 
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
 html, body {
   height: 100%;
   width: 100%;

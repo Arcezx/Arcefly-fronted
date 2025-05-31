@@ -25,7 +25,7 @@ export class LoginComponent {
   isLoading: boolean = false;
   showPassword: boolean = false;
   showAnimation: boolean = false;
-
+  message: string = '';
   constructor(
     private authService: AuthService, 
     private router: Router,
@@ -34,8 +34,10 @@ export class LoginComponent {
   ) {}
 
   onLogin(): void {
+    this.message = ''; 
     if (!this.email || !this.password) {
-      this.toastr.warning('Por favor, ingresa email y contraseña', 'Campos requeridos');
+      this.message = 'Por favor, ingresa email y contraseña'; // Mensaje alternativo al toastr
+      this.toastr.warning(this.message, 'Campos requeridos');
       return;
     }
 
@@ -49,13 +51,15 @@ export class LoginComponent {
         if (response.success && response.user) {
           this.showAnimation = true;
           this.toastr.success('Inicio de sesión exitoso', 'Bienvenido');
-        } else {
-          this.toastr.error(response.message || 'Credenciales incorrectas', 'Error');
+       } else {
+          this.message = response.message || 'Credenciales incorrectas'; // Mensaje de error
+          this.toastr.error(this.message, 'Error');
         }
       },
-      error: (err) => {
+       error: (err) => {
         this.isLoading = false;
-        this.toastr.error('Error de conexión con el servidor', 'Error');
+        this.message = 'Error de conexión con el servidor'; // Mensaje de error HTTP
+        this.toastr.error(this.message, 'Error');
         console.error('Login error:', err);
       }
     });
