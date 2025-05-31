@@ -1,0 +1,112 @@
+<div class="table-container">
+  <!-- Modal de viaje -->
+  <app-modal-viaje 
+    [show]="mostrarModal" 
+    [viaje]="viajeSeleccionado"
+    (close)="mostrarModal = false"
+    (submitForm)="manejarSubmit($event)">
+  </app-modal-viaje>
+
+  <!-- Contenedor fijo superior -->
+  <div class="fixed-header-container">
+    <div class="header">
+      <h2>Listado de Viajes</h2>
+    </div>
+
+    @if (loading) {
+      <div class="loading-message">Cargando viajes...</div>
+    }
+    @if (error) {
+      <div class="alert-danger">{{error}}</div>
+    }
+    @if (!loading && viajes.length === 0 && !error) {
+      <div class="no-results">No se encontraron viajes disponibles</div>
+    }
+
+    @if (!loading && viajes.length > 0) {
+      <!-- Filtros y acciones -->
+      <div class="controls-row">
+        <div class="filters">
+          <input type="text" [(ngModel)]="filtroTexto" placeholder="Buscar destino/origen..." class="filter-input small-width">
+          <select [(ngModel)]="filtroTipo" class="filter-select">
+            <option value="">Todos los tipos</option>
+            <option value="NACIONAL">NACIONAL</option>
+            <option value="INTERNACIONAL">INTERNACIONAL</option>
+            <option value="PROMOCIONAL">PROMOCIONAL</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" (click)="abrirFormularioNuevo()">
+            <i class="fas fa-plus"></i> Nuevo Viaje
+          </button>
+          <button class="btn btn-warning" [disabled]="!viajeSeleccionado" (click)="editarViaje(viajeSeleccionado!)">
+            <i class="fas fa-edit"></i> Modificar
+          </button>
+          <button class="btn btn-danger" [disabled]="!viajeSeleccionado" (click)="eliminarViaje(viajeSeleccionado!)">
+            <i class="fas fa-trash-alt"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Área de scroll para la tabla -->
+  @if (!loading && viajes.length > 0) {
+    <div class="table-scroll-container">
+      <table>
+        <thead class="sticky-table-header">
+          <tr>
+            <th>ID</th>
+            <th>Origen</th>
+            <th>Destino</th>
+            <th>Salida</th>
+            <th>Regreso</th>
+            <th>Trayecto</th>
+            <th>Capacidad</th>
+            <th>Estado</th>
+            <th>Clase</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let viaje of viajes | filtroViaje: filtroTexto : filtroTipo | slice: (currentPage * pageSize) : (currentPage * pageSize) + pageSize"
+              [class.selected]="viajeSeleccionado?.id === viaje.id"
+              (click)="seleccionarViaje(viaje)">
+            <td>{{ viaje.id }}</td>
+            <td>{{ viaje.origen }}</td>
+            <td>{{ viaje.destino }}</td>
+            <td>{{ viaje.fechaSalida | date:'shortDate' }}</td>
+            <td>{{ viaje.fechaRegreso | date:'shortDate' }}</td>
+            <td>{{ viaje.fechaRegreso ? 'Ida y Vuelta' : 'Solo Ida' }}</td>
+            <td>{{ viaje.capacidad }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                  'badge-activo': viaje.estado === 'ACTIVO',
+                  'badge-programado': viaje.estado === 'PROGRAMADO',
+                  'badge-reprogramado': viaje.estado === 'REPROGRAMADO',
+                  'badge-cancelado': viaje.estado === 'CANCELADO',
+                  'badge-embarcando': viaje.estado === 'EMBARCANDO',
+                  'badge-aterrizado': viaje.estado === 'ATERRIZADO',
+                  'badge-en-hora': viaje.estado === 'EN HORA',
+                  'badge-por-confirmar': viaje.estado === 'POR CONFIRMAR'
+              }">
+                  {{ viaje.estado }}
+              </span>
+            </td>
+            <td>{{ viaje.clase }}</td>
+            <td>{{ viaje.tipo }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginador -->
+    <mat-paginator [length]="(viajes | filtroViaje: filtroTexto : filtroTipo).length"
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="pageSizeOptions"
+                  (page)="onPageChange($event)"
+                  aria-label="Seleccionar página de viajes">
+    </mat-paginator>
+  }
+</div>

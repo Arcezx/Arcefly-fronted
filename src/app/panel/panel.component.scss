@@ -1,0 +1,303 @@
+@use '../../styles.scss' as *;  // Esta debe ser la primera línea
+@use 'variables' as v;
+@use 'sass:color';
+:root {
+  --primary-color: #487cc5;
+  --accent-color: #3a5a8a;
+  --button-color: #3a6ea5;
+  --button-hover: #2d5591;
+  --text-color: #000000;
+  --bg-color: #f5f7fa;
+  --white: #ffffff;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes flyIn {
+  0% { opacity: 0; transform: translateX(-100px) translateY(20px); }
+  100% { opacity: 1; transform: translateX(0) translateY(0); }
+}
+
+@keyframes zoomFade {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes expandIn {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 1000px; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -500px 0; }
+  100% { background-position: 500px 0; }
+}
+
+/* Estilos base */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.loader {
+  height: 10px;
+  background: linear-gradient(to right, #ccc 8%, #e0e0e0 18%, #ccc 33%);
+  background-size: 1000px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 5px;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.zoom-fade {
+  animation: zoomFade 0.6s ease-out;
+}
+
+.fly-in {
+  animation: flyIn 0.8s ease forwards;
+}
+
+.expand-in {
+  animation: expandIn 0.5s ease-out forwards;
+  overflow: hidden;
+}
+
+/* Estructura principal */
+.panel-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  position: relative;
+}
+
+.header-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin: 0;
+}
+
+.sidebar {
+  position: fixed;
+  top: 60px; /* Justo debajo del header */
+  left: 0;
+  width: 440px;
+  height: calc(100vh - 60px);
+  background-color: #dededf;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  overflow-y: auto;
+}
+
+.sidebar .logo {
+  width: 260px;
+  height: 260px;
+  border-radius: 15%;
+  margin: 80px 0 40px 0;
+  object-fit: cover;
+  border: 3px solid #e0e0e0;
+}
+
+.sidebar .operations-title {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 10px 0 25px 0;
+  padding: 8px 15px;
+  background-color: var(--accent-color);
+  border-radius: 5px;
+  width: 80%;
+  text-align: center;
+}
+
+.sidebar .button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 12px 15px;
+  width: 80%;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 6px;
+  border: none;
+  margin: 8px 0;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar .button::after {
+  content: '';
+  display: block;
+  height: 3px;
+  width: 0;
+  background: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: width 0.3s ease;
+}
+
+.sidebar .button:hover::after {
+  width: 100%;
+}
+
+.sidebar .button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.content {
+  margin-left: 440px;
+  padding: 25px;
+  padding-top: 80px; /* Header height + espacio */
+  min-height: calc(100vh - 80px);
+  background-color: var(--bg-color);
+}
+
+/* Componentes */
+.main-image {
+  max-width: 80%;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.main-image:hover {
+  transform: scale(1.02);
+}
+
+.table-container {
+  margin-top: 20px;
+  background-color: transparent;
+  text-align: center;
+  border-radius: 8px;
+  padding: 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table th {
+  background-color: #1a3e72;
+  color: white;
+}
+
+.table tr:hover {
+  background-color: #f5f9ff;
+}
+
+/* Componentes específicos */
+.viajes-toolbar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filtro-tabla-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 100%;
+    position: relative;
+    top: 60px;
+    height: auto;
+  }
+
+  .content {
+    margin-left: 0;
+    padding-top: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    top: 60px;
+    padding: 10px;
+  }
+
+  .sidebar .logo {
+    width: 180px;
+    height: 180px;
+    margin: 20px auto;
+  }
+
+  .sidebar .button {
+    width: 95%;
+  }
+
+  .content {
+    padding: 20px;
+    padding-top: 80px;
+  }
+
+  .viajes-toolbar,
+  .controls-row {
+    flex-direction: column;
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto;
+  }
+}

@@ -1,0 +1,101 @@
+<div class="table-container">
+  <app-modal-reserva 
+  [show]="mostrarModalReserva" 
+  [reserva]="reservaSeleccionada"
+  (close)="cerrarModalReserva()">
+</app-modal-reserva>
+  <div class="fixed-header-container">
+    <div class="header">
+      <h2>Listado de Reservas</h2>
+    </div>
+
+    @if (isLoading) {
+      <div class="loading-message">Cargando reservas...</div>
+    }
+    @if (errorMessage) {
+      <div class="alert-danger">{{errorMessage}}</div>
+    }
+    @if (!isLoading && reservas.length === 0 && !errorMessage) {
+      <div class="no-results">No se encontraron reservas</div>
+    }
+
+    @if (!isLoading && reservas.length > 0) {
+      <!-- Filtros y acciones -->
+      <div class="controls-row">
+        <div class="filters">
+          <input type="text" [(ngModel)]="filtroTexto" placeholder="Buscar reserva..." class="filter-input small-width">
+          <select [(ngModel)]="filtroEstado" class="filter-select">
+            <option value="">Todos los estados</option>
+            <option value="ACTIVA">ACTIVA</option>
+            <option value="POR CONFIRMAR">POR CONFIRMAR</option>
+            <option value="CANCELADA">CANCELADA</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" (click)="abrirFormularioNuevo()">
+            <i class="fas fa-plus"></i> Nueva Reserva
+          </button>
+          <button class="btn btn-warning" [disabled]="!reservaSeleccionada" (click)="editarReserva()">
+            <i class="fas fa-edit"></i> Modificar
+          </button>
+          <button class="btn btn-danger" [disabled]="!reservaSeleccionada" (click)="cancelarReserva()">
+            <i class="fas fa-ban"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Área de scroll para la tabla -->
+  @if (!isLoading && reservas.length > 0) {
+    <div class="table-scroll-container">
+      <table>
+        <thead class="sticky-table-header">
+          <tr>
+            <th>ID Reserva</th>
+            <th>ID Viaje</th>
+            <th>ID Usuario</th>
+            <th>Fecha Reserva</th>
+            <th>Asiento</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reserva of reservas | filtroReserva: filtroTexto : filtroEstado | slice: (currentPage * pageSize) : (currentPage * pageSize) + pageSize"
+              [class.selected]="reservaSeleccionada?.idReserva === reserva.idReserva"
+              (click)="seleccionarReserva(reserva)">
+            <td>{{ reserva.idReserva }}</td>
+            <td>{{ reserva.idViaje }}</td>
+            <td>{{ reserva.idUsuario }}</td>
+            <td>{{ reserva.fechaReserva | date:'dd/MM/yyyy' }}</td>
+            <td>{{ reserva.asiento }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'badge-activa': reserva.estado === 'ACTIVA',
+                'badge-por-confirmar': reserva.estado === 'POR CONFIRMAR',
+                'badge-cancelada': reserva.estado === 'CANCELADA'
+              }">
+                {{ reserva.estado }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-success btn-sm" (click)="verDetalles($event, reserva)">
+                <i class="fas fa-eye"></i> Ver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginador -->
+    <mat-paginator [length]="(reservas | filtroReserva: filtroTexto : filtroEstado).length"
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="pageSizeOptions"
+                  (page)="onPageChange($event)"
+                  aria-label="Seleccionar página de reservas">
+    </mat-paginator>
+  }
+</div>

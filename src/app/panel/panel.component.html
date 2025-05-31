@@ -1,0 +1,55 @@
+<div class="panel-container">
+  <!-- Barra superior -->
+  <div class="header-bar">
+    <h1>Bienvenido al Sistema de Gestión de Arcefly</h1>
+  </div>
+
+  <!-- Barra de navegación lateral -->
+  <div class="sidebar">
+    <img src="assets/images/LogoAerolinea.PNG" alt="Logo Aerolínea" class="logo" />
+
+    <div class="operations-title">OPERACIONES</div>
+
+    <button class="button" (click)="mostrarInicio()">
+      <i class="fas fa-home"></i> INICIO
+    </button>
+    <button class="button" (click)="mostrarViajes()">
+      <i class="fas fa-plane"></i> VIAJES
+    </button>
+    <button class="button" (click)="mostrarClientes()">
+      <i class="fas fa-users"></i> CLIENTES
+    </button>
+    <button class="button" (click)="mostrarReservas()">
+      <i class="fas fa-ticket-alt"></i> RESERVAS
+    </button>
+    <button class="button" (click)="generarReporte()">
+      <i class="fas fa-file-alt"></i> GENERAR REPORTE
+    </button>
+    <button class="button" (click)="cerrarSesion()">
+      <i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN
+    </button>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="content">
+    <!-- Imagen principal (solo en inicio) -->
+    <div class="main-image-container" *ngIf="mostrarImagen">
+      <img src="assets/images/principal.png" alt="Imagen principal" class="main-image" />
+    </div>
+
+    <!-- Contenido dinámico -->
+    <div class="dynamic-content" *ngIf="!mostrarImagen">
+      <!-- Viajes -->
+      <app-tabla-viajes *ngIf="componenteActivo === 'viajes'"></app-tabla-viajes>
+      
+      <!-- Clientes -->
+      <app-tabla-clientes *ngIf="componenteActivo === 'clientes'"></app-tabla-clientes>
+
+      <!-- Reservas -->
+      <app-tabla-reservas *ngIf="componenteActivo === 'reservas'"></app-tabla-reservas>
+
+      <!-- Reporte de Incidente -->
+      <app-reporte-incidente *ngIf="componenteActivo === 'reporte'"></app-reporte-incidente>
+    </div>
+  </div>
+</div>

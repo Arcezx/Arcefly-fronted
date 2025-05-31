@@ -1,0 +1,192 @@
+@use '../../../styles/mixins' as m;
+@use 'variables' as v;
+@use 'sass:color';
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+  overflow: hidden; /* Elimina cualquier scroll en el overlay */
+
+  .modal-container {
+    background: v.$white;
+    border-radius: v.$border-radius-lg;
+    box-shadow: v.$shadow-lg;
+    width: 500px;
+    max-width: calc(100% - 40px); /* Asegura espaciado a los lados */
+    max-height: 90vh;
+    overflow-y: auto; /* Solo scroll vertical si es necesario */
+    animation: slideIn 0.3s ease-out;
+    margin: 20px; /* Espaciado externo uniforme */
+    padding: 0; /* Reset del padding para control interno */
+
+    .modal-header {
+      padding: v.$spacing-xl v.$spacing-xxl;
+      border-bottom: 1px solid v.$border-color;
+      background-color: v.$primary-color;
+      color: v.$white;
+      border-top-left-radius: v.$border-radius-lg;
+      border-top-right-radius: v.$border-radius-lg;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
+      h2 {
+        margin: 0;
+        font-size: v.$font-size-lg;
+        font-weight: 500;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: v.$font-size-xl;
+        cursor: pointer;
+        color: v.$white;
+        transition: transform 0.2s;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .modal-form {
+      padding: v.$spacing-xxl;
+      box-sizing: border-box;
+
+      .form-grid {
+        display: flex;
+        flex-direction: column;
+        gap: v.$spacing-xl;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .form-row {
+        display: flex;
+        gap: v.$spacing-xl;
+        width: 100%;
+
+        .form-group {
+          flex: 1;
+          min-width: 0; /* Previene overflow */
+        }
+      }
+
+      .form-group {
+        margin-bottom: v.$spacing-xl;
+        width: 100%;
+
+        label {
+          display: block;
+          margin-bottom: v.$spacing-md;
+          font-weight: 600;
+          color: v.$text-primary;
+          font-size: v.$font-size-md;
+        }
+
+        .required {
+          color: v.$danger-color;
+          margin-left: v.$spacing-xs;
+        }
+
+        .form-input, .form-select {
+          width: 100%;
+          padding: v.$spacing-md v.$spacing-lg;
+          border: 1px solid v.$border-color;
+          border-radius: v.$border-radius-sm;
+          font-size: v.$font-size-md;
+          transition: all 0.3s;
+          box-sizing: border-box;
+
+          &:focus {
+            outline: none;
+            border-color: v.$primary-color;
+            box-shadow: 0 0 0 2px color.adjust(v.$primary-color, $alpha: -0.8);          }
+        }
+
+        .password-input-container {
+          position: relative;
+
+          .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: v.$text-secondary;
+          }
+        }
+
+        .validation-hint {
+          color: v.$danger-color;
+          font-size: v.$font-size-sm;
+          margin-top: v.$spacing-xs;
+          word-break: break-word;
+        }
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: v.$spacing-lg;
+        margin-top: v.$spacing-xxl;
+        padding-top: v.$spacing-lg;
+        border-top: 1px solid v.$border-color;
+
+        .btn-primary {
+          @include m.button-primary;
+          padding: v.$spacing-md v.$spacing-xl;
+          min-width: 120px;
+        }
+
+        .btn-secondary {
+          @include m.button-secondary;
+          padding: v.$spacing-md v.$spacing-xl;
+          min-width: 120px;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    .modal-container {
+      width: calc(100% - 30px);
+      margin: 15px;
+      
+      .modal-form {
+        padding: v.$spacing-xl !important;
+        
+        .form-row {
+          flex-direction: column !important;
+          gap: v.$spacing-lg !important;
+        }
+      }
+    }
+  }
+}

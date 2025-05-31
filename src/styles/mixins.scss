@@ -1,0 +1,45 @@
+@use 'sass:color';
+@use './variables' as v;
+
+@mixin button-base {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: v.$primary-color;
+  color: white;
+
+  &:hover {
+    background-color: color.adjust(v.$primary-color, $lightness: -10%);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: v.$background-light;
+  color: v.$text-primary;
+
+  &:hover {
+    background-color: color.adjust(v.$background-light, $lightness: -5%);
+  }
+}

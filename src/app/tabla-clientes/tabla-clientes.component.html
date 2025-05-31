@@ -1,0 +1,107 @@
+<div class="table-container">
+  <app-modal-cliente 
+    [show]="mostrarModal"
+    [cliente]="clienteEdicion"
+    (close)="cerrarModal()"
+    (submitForm)="guardarCliente($event)">
+  </app-modal-cliente>
+  
+  <!-- Contenedor fijo superior -->
+  <div class="fixed-header-container">
+    <div class="header">
+      <h2>Listado de Clientes</h2>
+    </div>
+
+    @if (isLoading) {
+      <div class="loading-message">Cargando clientes...</div>
+    }
+    @if (error) {
+      <div class="alert-danger">{{error}}</div>
+    }
+    @if (!isLoading && clientes.length === 0 && !error) {
+      <div class="no-results">No se encontraron clientes</div>
+    }
+
+    @if (!isLoading && clientes.length > 0) {
+      <!-- Filtros y acciones -->
+      <div class="controls-row">
+        <div class="filters">
+          <input type="text" [(ngModel)]="filtroTexto" placeholder="Buscar cliente..." class="filter-input small-width">
+          <select [(ngModel)]="filtroTipo" class="filter-select">
+            <option value="">Todos los tipos</option>
+            <option value="ESTANDAR">ESTANDAR</option>
+            <option value="PREMIUM">PREMIUM</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" (click)="abrirFormularioNuevo()">
+            <i class="fas fa-plus"></i> Nuevo Cliente
+          </button>
+          <button class="btn btn-warning" [disabled]="!clienteSeleccionado" (click)="editarCliente(clienteSeleccionado!)">
+            <i class="fas fa-edit"></i> Modificar
+          </button>
+          <button class="btn btn-danger" [disabled]="!clienteSeleccionado" (click)="eliminarCliente(clienteSeleccionado!)">
+            <i class="fas fa-trash-alt"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Área de scroll para la tabla -->
+  @if (!isLoading && clientes.length > 0) {
+    <div class="table-scroll-container">
+      <table>
+        <thead class="sticky-table-header">
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Tipo</th>
+            <th>Estado</th>
+            <th>Detalles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliente of clientes | filtroCliente: filtroTexto : filtroTipo | slice: (currentPage * pageSize) : (currentPage * pageSize) + pageSize"
+              [class.selected]="clienteSeleccionado?.id === cliente.id"
+              (click)="seleccionarCliente(cliente)">
+            <td>{{ cliente.id }}</td>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'badge-premium': cliente.tipo === 'PREMIUM',
+                'badge-estandar': cliente.tipo === 'ESTANDAR'
+              }">
+                {{ cliente.tipo }}
+              </span>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'badge-activo': cliente.estado === 'ACTIVO',
+                'badge-inactivo': cliente.estado === 'INACTIVO'
+              }">
+                {{ cliente.estado }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-success btn-sm" (click)="verDetalles(cliente); $event.stopPropagation()">
+                <i class="fas fa-eye"></i> Ver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginador -->
+    <mat-paginator [length]="(clientes | filtroCliente: filtroTexto : filtroTipo).length"
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="pageSizeOptions"
+                  (page)="onPageChange($event)"
+                  aria-label="Seleccionar página de clientes">
+    </mat-paginator>
+  }
+</div>

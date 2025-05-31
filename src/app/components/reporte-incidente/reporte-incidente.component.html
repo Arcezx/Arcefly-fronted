@@ -1,0 +1,67 @@
+<div class="reporte-container">
+  <h2><i class="fas fa-bug"></i> Reportar Problema</h2>
+  
+  <form (ngSubmit)="enviarReporte()" #form="ngForm" *ngIf="!enviado; else confirmacion">
+    <div class="form-group">
+      <label>Área afectada:</label>
+      <select [(ngModel)]="incidente.area" name="area" required class="form-control">
+        <option value="">-- Seleccione --</option>
+        <option value="clientes">Clientes</option>
+        <option value="viajes">Viajes</option>
+        <option value="reservas">Reservas</option>
+        <option value="interfaz">Interfaz</option>
+        <option value="otros">Otros</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Descripción detallada:</label>
+      <textarea 
+        [(ngModel)]="incidente.descripcion" 
+        name="descripcion" 
+        required
+        rows="5"
+        class="form-control"
+        placeholder="Describa el problema con todos los detalles posibles..."
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Email de contacto:</label>
+      <input 
+        type="email" 
+        [(ngModel)]="incidente.email" 
+        name="email" 
+        required
+        class="form-control"
+        placeholder="su@email.com"
+      >
+    </div>
+
+    <div class="form-footer">
+<button type="submit" [disabled]="form.invalid || cargando" class="btn-enviar">
+  <fa-icon 
+    [icon]="cargando ? icons.spinner : icons.send" 
+    [class.spin]="cargando"></fa-icon>
+  {{ cargando ? 'Enviando...' : 'Enviar Reporte' }}
+</button>
+      
+      <p *ngIf="error" class="error-message">
+        <i class="fas fa-exclamation-circle"></i> {{ error }}
+      </p>
+    </div>
+  </form>
+
+  <ng-template #confirmacion>
+    <div class="confirmation-box">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>¡Reporte enviado con éxito!</h3>
+      <p>Hemos recibido tu reporte y nos pondremos en contacto contigo pronto.</p>
+      <button (click)="enviado = false" class="btn-volver">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,109 @@
+/* Animaciones - Importación corregida */
+@import 'animate.css/animate.css'; // Versión corregida
+
+/* Estilos base */
+html, body { 
+  height: 100%; 
+}
+
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+/* Fondo con efecto blur */
+.login-background::before {
+  content: "";
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/images/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  z-index: -1;
+}
+
+/* Snackbars personalizados */
+.success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Toast personalizado */
+.custom-toast {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 12px 20px !important;
+  font-family: 'Arial', sans-serif !important;
+  animation: fadeIn 0.3s, fadeOut 0.3s 2.7s !important;
+}
+
+.toast-success-icon {
+  color: white !important;
+  font-size: 1.5rem !important;
+}
+
+/* Animaciones personalizadas */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+@keyframes bounceIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Estilos para SweetAlert */
+.swal2-popup {
+  font-family: 'Roboto', sans-serif;
+  border-radius: 8px !important;
+  
+  .swal2-title {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .swal2-html-container {
+    font-size: 1.1rem;
+  }
+  
+  &.animate__animated {
+    --animate-duration: 0.3s;
+  }
+}
+
+/* Efectos para tablas */
+tr {
+  transition: all 0.3s ease;
+  
+  &.animate__tada {
+    --animate-duration: 0.8s;
+  }
+  
+  &.animate__pulse {
+    --animate-duration: 0.5s;
+    --animate-repeat: 2;
+  }
+}
+
+/* Toast de éxito personalizado */
+.swal2-toast.swal2-success {
+  background: #4CAF50 !important;
+  border-left: 4px solid #2E7D32 !important;
+}

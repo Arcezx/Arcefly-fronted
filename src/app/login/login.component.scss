@@ -1,0 +1,203 @@
+@use 'variables' as v;
+@use 'sass:color';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
+  position: relative;
+  background-color: #dbdad1;
+
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1;
+  }
+}
+
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+}
+
+.login-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dfddce;
+  padding: 20px;
+  border-right: 3px solid #e4e2d5;
+
+  img {
+    max-width: 80%;
+    height: auto;
+    border: 3px solid #e4e2d5;
+    border-radius: 8px;
+  }
+}
+
+.login-form {
+  flex: 1;
+  padding: 40px;
+  background-color: #e4e2d5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid #ddd;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #555;
+    display: block;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-top: 8px;
+    background-color: #f1f1f1;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #999;
+      background-color: #fff;
+    }
+  }
+}
+
+.password-container {
+  position: relative;
+
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: transparent;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #333;
+  width: 100%;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #dad7c5;
+    border-color: #666;
+  }
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+
+  a {
+    color: #333;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.loading {
+  margin-top: 20px;
+  text-align: center;
+
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+  }
+
+  p {
+    margin-top: 10px;
+  }
+}
+
+.message {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #444;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+ }
+/* login.component.scss */
+
+/* Aquí agregamos la imagen de fondo solo para el login */
+.login-container {
+  background-image: url('/assets/login-background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;  /* Que cubra toda la pantalla */
+}

@@ -1,0 +1,92 @@
+<div class="modal-overlay" *ngIf="show" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-container" tabindex="-1">
+    <div class="modal-header">
+      <h2 id="modal-title">{{ esEdicion ? 'Editar Reserva' : 'Nueva Reserva' }}</h2>
+      <button type="button" (click)="cerrar()" aria-label="Cerrar modal" class="close-btn">&times;</button>
+    </div>
+
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="modal-form" novalidate>
+      <div class="form-grid">
+        <!-- Selector de Viaje -->
+        <div class="form-group">
+          <label for="idViaje">Viaje <span class="required">*</span></label>
+          <select id="idViaje" formControlName="idViaje" class="form-select">
+            <option [ngValue]="null" disabled>Seleccione un viaje</option>
+            <option *ngFor="let viaje of viajes" [ngValue]="viaje.id">
+              {{ viaje.textoOpcion }}
+            </option>
+          </select>
+          <div *ngIf="formulario.get('idViaje')?.invalid && formulario.get('idViaje')?.touched" class="validation-hint">
+            Por favor seleccione un viaje
+          </div>
+        </div>
+
+        <!-- Selector de Cliente -->
+        <div class="form-group">
+          <label for="idUsuario">Cliente <span class="required">*</span></label>
+          <select id="idUsuario" formControlName="idUsuario" class="form-select">
+            <option [ngValue]="null" disabled>Seleccione un cliente</option>
+            <option *ngFor="let cliente of clientes" [ngValue]="cliente.id">
+              {{ cliente.textoOpcion }}
+            </option>
+          </select>
+          <div *ngIf="formulario.get('idUsuario')?.invalid && formulario.get('idUsuario')?.touched" class="validation-hint">
+            Por favor seleccione un cliente
+          </div>
+          <div *ngIf="clienteYaReservado" class="validation-hint text-warning">
+            ¡Este cliente ya tiene una reserva para este viaje!
+          </div>
+        </div>
+
+        <!-- Asiento con validación -->
+        <div class="form-group">
+          <label for="asiento">Asiento <span class="required">*</span></label>
+          <input id="asiento" type="text" formControlName="asiento" class="form-input" placeholder="Ejemplo: 12A">
+          <div *ngIf="formulario.get('asiento')?.errors?.['required'] && formulario.get('asiento')?.touched" class="validation-hint">
+            Por favor ingrese el número de asiento
+          </div>
+          <div *ngIf="formulario.get('asiento')?.errors?.['pattern'] && formulario.get('asiento')?.touched" class="validation-hint">
+            Formato incorrecto (ejemplo: 12A, 5B)
+          </div>
+          <div *ngIf="!asientoDisponible && formulario.get('asiento')?.valid" class="validation-hint text-warning">
+            ¡Este asiento ya está ocupado!
+          </div>
+          <div *ngIf="verificandoAsiento" class="validation-hint text-info">
+            Verificando disponibilidad del asiento...
+          </div>
+        </div>
+
+        <!-- Fecha y Estado -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fechaReserva">Fecha Reserva <span class="required">*</span></label>
+            <input id="fechaReserva" type="date" formControlName="fechaReserva" class="form-input">
+            <div *ngIf="formulario.get('fechaReserva')?.invalid && formulario.get('fechaReserva')?.touched" class="validation-hint">
+              Por favor seleccione una fecha
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="estado">Estado <span class="required">*</span></label>
+            <select id="estado" formControlName="estado" class="form-select">
+              <option [ngValue]="null" disabled>Seleccione un estado</option>
+              <option *ngFor="let estado of estadosReserva" [ngValue]="estado">{{ estado }}</option>
+            </select>
+            <div *ngIf="formulario.get('estado')?.invalid && formulario.get('estado')?.touched" class="validation-hint">
+              Por favor seleccione un estado
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acciones -->
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cerrar()">Cancelar</button>
+        <button type="submit" class="btn-primary" 
+                [disabled]="formulario.invalid || (verificandoAsiento && !esEdicion) || loading || (clienteYaReservado && !esEdicion)">
+          {{ loading ? 'Procesando...' : (esEdicion ? 'Actualizar' : 'Guardar') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

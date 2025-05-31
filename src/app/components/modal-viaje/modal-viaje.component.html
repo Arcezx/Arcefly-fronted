@@ -1,0 +1,147 @@
+<div class="modal-overlay" *ngIf="show">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2>{{ esEdicion ? 'Editar Viaje' : 'Nuevo Viaje' }}</h2>
+      <button (click)="cerrar()" class="close-btn">&times;</button>
+    </div>
+
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="modal-form">
+      <div class="form-grid">
+        <!-- Fila 1: Origen y Destino -->
+        <div class="form-row">
+          <div class="form-group" [class.invalid]="formulario.get('origen')?.invalid && formulario.get('origen')?.touched">
+            <label>
+              Origen <span class="required">*</span>
+            </label>
+            <select formControlName="origen" class="form-select" required>
+              <option [ngValue]="null" disabled>Seleccione un origen</option>
+              <option *ngFor="let ciudad of ciudadesDisponibles" [ngValue]="ciudad">
+                {{ ciudad }}
+              </option>
+            </select>
+            <div *ngIf="formulario.get('origen')?.errors?.['required'] && formulario.get('origen')?.touched" class="validation-hint">
+              Por favor seleccione un origen
+            </div>
+          </div>
+
+          <div class="form-group" [class.invalid]="formulario.get('destino')?.invalid && formulario.get('destino')?.touched">
+            <label>
+              Destino <span class="required">*</span>
+            </label>
+            <select formControlName="destino" class="form-select" required>
+              <option [ngValue]="null" disabled>Seleccione un destino</option>
+              <option *ngFor="let ciudad of ciudadesDisponibles" [ngValue]="ciudad">
+                {{ ciudad }}
+              </option>
+            </select>
+            <div *ngIf="formulario.get('destino')?.errors?.['required'] && formulario.get('destino')?.touched" class="validation-hint">
+              Por favor seleccione un destino
+            </div>
+            <div *ngIf="formulario.get('destino')?.errors?.['mismoDestino']" class="validation-hint">
+              El destino no puede ser igual al origen
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 2: Fechas -->
+        <div class="form-row">
+          <div class="form-group" [class.invalid]="formulario.get('fechaSalida')?.invalid && formulario.get('fechaSalida')?.touched">
+            <label>
+              Fecha Salida <span class="required">*</span>
+            </label>
+            <input type="date" formControlName="fechaSalida" class="form-input" required>
+            <div *ngIf="formulario.get('fechaSalida')?.errors?.['required'] && formulario.get('fechaSalida')?.touched" class="validation-hint">
+              Por favor ingrese una fecha de salida
+            </div>
+            <div *ngIf="formulario.get('fechaSalida')?.errors?.['fechaPasada']" class="validation-hint">
+              La fecha debe ser futura
+            </div>
+          </div>
+
+          <div class="form-group" [class.invalid]="formulario.get('fechaRegreso')?.invalid && formulario.get('fechaRegreso')?.touched">
+            <label>Fecha Regreso</label>
+            <input type="date" formControlName="fechaRegreso" class="form-input">
+          </div>
+        </div>
+
+        <!-- Fila 3: Capacidad y Estado -->
+        <div class="form-row">
+          <div class="form-group" [class.invalid]="formulario.get('capacidad')?.invalid && formulario.get('capacidad')?.touched">
+            <label>
+              Capacidad <span class="required">*</span>
+            </label>
+            <input type="number" formControlName="capacidad" class="form-input" min="70" required>
+            <div *ngIf="formulario.get('capacidad')?.errors?.['required'] && formulario.get('capacidad')?.touched" class="validation-hint">
+              Por favor ingrese la capacidad
+            </div>
+            <div *ngIf="formulario.get('capacidad')?.errors?.['min']" class="validation-hint">
+              La capacidad mínima es 70
+            </div>
+          </div>
+
+          <div class="form-group" [class.invalid]="formulario.get('estado')?.invalid && formulario.get('estado')?.touched">
+            <label>
+              Estado <span class="required">*</span>
+            </label>
+            <select formControlName="estado" class="form-select" required>
+              <option [ngValue]="null" disabled>Seleccione un estado</option>
+              <option *ngFor="let estado of estados" [ngValue]="estado">
+                {{ estado }}
+              </option>
+            </select>
+            <div *ngIf="formulario.get('estado')?.errors?.['required'] && formulario.get('estado')?.touched" class="validation-hint">
+              Por favor seleccione un estado
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 4: Clase y Tipo -->
+        <div class="form-row">
+          <div class="form-group" [class.invalid]="formulario.get('clase')?.invalid && formulario.get('clase')?.touched">
+            <label>
+              Clase <span class="required">*</span>
+            </label>
+            <select formControlName="clase" class="form-select" required>
+              <option [ngValue]="null" disabled>Seleccione una clase</option>
+              <option *ngFor="let clase of clases" [ngValue]="clase">
+                {{ clase }}
+              </option>
+            </select>
+            <div *ngIf="formulario.get('clase')?.errors?.['required'] && formulario.get('clase')?.touched" class="validation-hint">
+              Por favor seleccione una clase
+            </div>
+          </div>
+
+          <div class="form-group" [class.invalid]="formulario.get('tipo')?.invalid && formulario.get('tipo')?.touched">
+            <label>
+              Tipo <span class="required">*</span>
+            </label>
+            <select formControlName="tipo" class="form-select" required>
+              <option [ngValue]="null" disabled>Seleccione un tipo</option>
+              <option *ngFor="let tipo of tipos" [ngValue]="tipo">
+                {{ tipo }}
+              </option>
+            </select>
+            <div *ngIf="formulario.get('tipo')?.errors?.['required'] && formulario.get('tipo')?.touched" class="validation-hint">
+              Por favor seleccione un tipo
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 5: Dirección (solo lectura) -->
+        <div class="form-group">
+          <label>Dirección</label>
+          <input type="text" formControlName="direccion" class="form-input" readonly>
+        </div>
+      </div>
+
+      <!-- Acciones -->
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cerrar()">Cancelar</button>
+        <button type="submit" class="btn-primary" [disabled]="formulario.invalid">
+          {{ esEdicion ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

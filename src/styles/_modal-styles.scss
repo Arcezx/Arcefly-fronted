@@ -1,0 +1,164 @@
+@use './variables' as v;
+@use './mixins' as m;
+
+// Estilos base para todos los modales
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+
+  .modal-container {
+    background: v.$white;
+    border-radius: v.$border-radius-lg;
+    box-shadow: v.$shadow-lg;
+    width: 500px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease-out;
+
+    .modal-header {
+      padding: v.$spacing-xl v.$spacing-xxl;
+      border-bottom: 1px solid v.$border-color;
+      background-color: v.$primary-color;
+      color: v.$white;
+      border-top-left-radius: v.$border-radius-lg;
+      border-top-right-radius: v.$border-radius-lg;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h2 {
+        margin: 0;
+        font-size: v.$font-size-lg;
+        font-weight: 500;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: v.$font-size-xl;
+        cursor: pointer;
+        color: v.$white;
+        transition: transform 0.2s;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .modal-form {
+      padding: v.$spacing-xxl;
+
+      .form-grid {
+        display: flex;
+        gap: v.$spacing-xl;
+
+        .form-column {
+          flex: 1;
+          min-width: 0; // Evita problemas de desbordamiento
+        }
+      }
+
+      .form-group {
+        margin-bottom: v.$spacing-xl;
+
+        label {
+          display: block;
+          margin-bottom: v.$spacing-sm;
+          font-weight: 600;
+          color: v.$text-primary;
+          font-size: v.$font-size-md;
+        }
+
+        .required-indicator {
+          color: v.$danger-color;
+          margin-left: v.$spacing-xs;
+        }
+
+        input, select {
+          width: 100%;
+          padding: v.$spacing-md v.$spacing-lg;
+          border: 1px solid v.$border-color;
+          border-radius: v.$border-radius-sm;
+          font-size: v.$font-size-md;
+          transition: all 0.3s;
+
+          &:focus {
+            outline: none;
+            border-color: v.$primary-color;
+            box-shadow: 0 0 0 2px rgba(v.$primary-color, 0.2);
+          }
+        }
+
+        .password-input-container {
+          position: relative;
+
+          input {
+            padding-right: 40px; // Espacio para el botón de toggle
+          }
+
+          .toggle-password {
+            position: absolute;
+            right: v.$spacing-md;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: v.$text-secondary;
+            font-size: v.$font-size-md;
+          }
+        }
+
+        .validation-hint {
+          color: v.$danger-color;
+          font-size: v.$font-size-sm;
+          margin-top: v.$spacing-xs;
+        }
+
+        &.invalid {
+          input, select {
+            border-color: v.$danger-color;
+          }
+        }
+      }
+
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: v.$spacing-lg;
+        margin-top: v.$spacing-xxl;
+        padding-top: v.$spacing-lg;
+        border-top: 1px solid v.$border-color;
+
+        .btn-submit {
+          @include m.button-primary;
+        }
+
+        .cancel-button {
+          @include m.button-secondary;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(0); }
+}

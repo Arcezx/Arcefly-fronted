@@ -1,0 +1,136 @@
+@use '../../../styles/variables' as v;@use 'sass:color';
+$disabled-color: #cccccc; // Al inicio del archivo
+.reporte-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: v.$white;
+  border-radius: 10px;
+  box-shadow: v.$shadow-md;
+
+  h2 {
+    color: v.$primary-color;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    
+    i {
+      margin-right: v.$spacing-md;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      margin-bottom: v.$spacing-sm;
+      font-weight: 600;
+      color: v.$text-secondary;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: v.$spacing-md;
+      border: 1px solid v.$border-color;
+      border-radius: v.$border-radius-sm;
+      font-size: 1rem;
+      transition: border 0.3s;
+
+      &:focus {
+        border-color: v.$primary-color;
+        outline: none;
+        box-shadow: 0 0 0 3px color.adjust(v.$primary-color, $alpha: -0.9);
+      }
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+  }
+
+  .form-footer {
+    margin-top: 2rem;
+    text-align: center;
+
+    .btn-enviar {
+      background: v.$primary-color;
+      color: v.$white;
+      border: none;
+      padding: v.$spacing-md v.$spacing-xl;
+      border-radius: v.$border-radius-sm;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: v.$spacing-sm;
+
+      &:hover {
+        background: color.adjust(v.$primary-color, $lightness: -10%);
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        background: $disabled-color;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+
+    .error-message {
+      color: v.$danger-color;
+      margin-top: v.$spacing-md;
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-sm;
+      justify-content: center;
+    }
+  }
+
+  .confirmation-box {
+    text-align: center;
+    padding: 2rem;
+
+    .success-icon {
+      color: v.$success-color;
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      color: v.$text-primary;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: v.$text-secondary;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .btn-volver {
+      background: v.$background-light;
+      color: v.$text-primary;
+      border: none;
+      padding: v.$spacing-sm v.$spacing-lg;
+      border-radius: v.$border-radius-sm;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background: color.adjust(v.$background-light, $lightness: -5%);
+      }
+    }
+  }
+}
+
+.fa-icon.spin {
+  animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+}
