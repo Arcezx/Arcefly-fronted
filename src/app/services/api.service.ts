@@ -11,10 +11,14 @@ export class ApiService {
 constructor(private http: HttpClient) {}
 
 enviarIncidente(data: any): Observable<any> {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+  
   return this.http.post(`${environment.apiBaseUrl}/api/incidentes`, data, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    headers: headers,
+    withCredentials: false  // Cambiado a false si no usas cookies
   });
 }
 }
