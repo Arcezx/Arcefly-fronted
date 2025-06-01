@@ -86,21 +86,21 @@ export class ReservaService {
     );
   }
 
-  cancelarReserva(idReserva: number): Observable<Reserva> {
-    return this.http.patch<Reserva>(`${this.apiUrl}/${idReserva}/cancelar`, {}).pipe(
-      tap(canceledReserva => {
-        const current = this.reservasSubject.value;
-        const updated = current.map(r => 
-          r.idReserva === idReserva ? canceledReserva : r
-        );
-        this.reservasSubject.next(updated);
-      }),
-      catchError(error => {
-        console.error('Error al cancelar reserva:', error);
-        throw error;
-      })
-    );
-  }
+cancelarReserva(idReserva: number, usuarioId: number): Observable<Reserva> {
+  return this.http.patch<Reserva>(`${this.apiUrl}/${idReserva}/cancelar?usuarioId=${usuarioId}`, {}).pipe(
+    tap(canceledReserva => {
+      const current = this.reservasSubject.value;
+      const updated = current.map(r => 
+        r.idReserva === idReserva ? canceledReserva : r
+      );
+      this.reservasSubject.next(updated);
+    }),
+    catchError(error => {
+      console.error('Error al cancelar reserva:', error);
+      throw error;
+    })
+  );
+}
 
   eliminarReserva(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(

@@ -10,21 +10,21 @@
 
     <div class="operations-title">OPERACIONES</div>
 
-    <a class="button" routerLink="." routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <button class="button" (click)="mostrarInicio()">
       <i class="fas fa-home"></i> INICIO
-    </a>
-    <a class="button" routerLink="viajes" routerLinkActive="active">
+    </button>
+    <button class="button" (click)="mostrarViajes()">
       <i class="fas fa-plane"></i> VIAJES
-    </a>
-    <a class="button" routerLink="clientes" routerLinkActive="active">
+    </button>
+    <button class="button" (click)="mostrarClientes()">
       <i class="fas fa-users"></i> CLIENTES
-    </a>
-    <a class="button" routerLink="reservas" routerLinkActive="active">
+    </button>
+    <button class="button" (click)="mostrarReservas()">
       <i class="fas fa-ticket-alt"></i> RESERVAS
-    </a>
-    <a class="button" routerLink="reporte" routerLinkActive="active">
+    </button>
+    <button class="button" (click)="generarReporte()">
       <i class="fas fa-file-alt"></i> GENERAR REPORTE
-    </a>
+    </button>
     <button class="button" (click)="cerrarSesion()">
       <i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN
     </button>
@@ -32,6 +32,24 @@
 
   <!-- Contenido principal -->
   <div class="content">
-    <router-outlet></router-outlet>
+    <!-- Imagen principal (solo en inicio) -->
+    <div class="main-image-container" *ngIf="mostrarImagen">
+      <img src="assets/images/principal.png" alt="Imagen principal" class="main-image" />
+    </div>
+
+    <!-- Contenido dinámico -->
+    <div class="dynamic-content" *ngIf="!mostrarImagen">
+      <!-- Viajes -->
+      <app-tabla-viajes *ngIf="componenteActivo === 'viajes'"></app-tabla-viajes>
+      
+      <!-- Clientes -->
+      <app-tabla-clientes *ngIf="componenteActivo === 'clientes'"></app-tabla-clientes>
+
+      <!-- Reservas -->
+      <app-tabla-reservas *ngIf="componenteActivo === 'reservas'"></app-tabla-reservas>
+
+      <!-- Reporte de Incidente -->
+      <app-reporte-incidente *ngIf="componenteActivo === 'reporte'"></app-reporte-incidente>
+    </div>
   </div>
 </div>
