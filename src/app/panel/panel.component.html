@@ -39,17 +39,7 @@
 
     <!-- Contenido dinámico -->
     <div class="dynamic-content" *ngIf="!mostrarImagen">
-      <!-- Viajes -->
-      <app-tabla-viajes *ngIf="componenteActivo === 'viajes'"></app-tabla-viajes>
-      
-      <!-- Clientes -->
-      <app-tabla-clientes *ngIf="componenteActivo === 'clientes'"></app-tabla-clientes>
-
-      <!-- Reservas -->
-      <app-tabla-reservas *ngIf="componenteActivo === 'reservas'"></app-tabla-reservas>
-
-      <!-- Reporte de Incidente -->
-      <app-reporte-incidente *ngIf="componenteActivo === 'reporte'"></app-reporte-incidente>
+       <router-outlet></router-outlet>
     </div>
   </div>
 </div>

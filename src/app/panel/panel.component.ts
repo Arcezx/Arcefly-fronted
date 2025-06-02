@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TablaClientesComponent } from '../tabla-clientes/tabla-clientes.component';
 import { TablaViajesComponent } from '../tabla-viajes/tabla-viajes.component';
 import { AuthService } from '../services/auth.service';
@@ -16,7 +16,8 @@ import { ReporteIncidenteComponent } from '../components/reporte-incidente/repor
     TablaClientesComponent,
     TablaViajesComponent,
     TablaReservasComponent,
-    ReporteIncidenteComponent
+    ReporteIncidenteComponent,
+    RouterModule
   ],
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
@@ -43,32 +44,19 @@ mostrarInicio(): void {
     this.componenteActivo = 'altaAdmin';
   }
 
-  mostrarViajes() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.mostrarImagen = false;
-    this.componenteActivo = 'viajes';
-  }
+mostrarViajes() {
+  this.router.navigate(['panel/viajes']);
+}
 
-  mostrarClientes() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.mostrarImagen = false;
-    this.componenteActivo = 'clientes';
-  }
+mostrarClientes() {
+  this.router.navigate(['panel/clientes']);
+}
 
-  mostrarReservas() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.mostrarImagen = false;
-    this.componenteActivo = 'reservas';
-  }
+
+
+mostrarReservas() {
+  this.router.navigate(['panel/reservas']);
+}
 
   generarReporte() {
     if (!this.authService.isLoggedIn()) {
