@@ -215,28 +215,33 @@ export class TablaReservasComponent implements OnInit {
   }
 
   cancelarReservaConfirmado(reserva: Reserva): void {
-    const swalLoading = Swal.fire({
-      title: 'Cancelando reserva...',
-      allowOutsideClick: false,
-      didOpen: () => Swal.showLoading()
-    });
-
-    this.reservaService.cancelarReserva(reserva.idReserva).subscribe({
-      next: () => {
-        Swal.close();
-        Swal.fire({
-          title: 'Reserva cancelada',
-          icon: 'success',
-          timer: 2000,
-          showConfirmButton: false
-        });
-      },
-      error: (err) => {
-        Swal.close();
-        this.mostrarError('Error', 'No se pudo cancelar la reserva');
-      }
-    });
+      const usuarioId = Number(localStorage.getItem('userId')); // Obtener el ID del usuario logueado
+      if (!usuarioId) {
+    this.mostrarError('Error', 'No se pudo identificar al usuario');
+    return;
   }
+       const swalLoading = Swal.fire({
+    title: 'Cancelando reserva...',
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading()
+  });
+
+  this.reservaService.cancelarReserva(reserva.idReserva, usuarioId).subscribe({
+    next: () => {
+      Swal.close();
+      Swal.fire({
+        title: 'Reserva cancelada',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    error: (err) => {
+      Swal.close();
+      this.mostrarError('Error', 'No se pudo cancelar la reserva');
+    }
+  });
+}
 
   eliminarReserva(): void {
     if (!this.reservaSeleccionada) return;
