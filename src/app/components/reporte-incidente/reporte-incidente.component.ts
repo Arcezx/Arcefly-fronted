@@ -37,13 +37,23 @@ enviarReporte() {
 
   this.apiService.enviarIncidente(this.incidente).subscribe({
     next: (response: any) => {
-      this.enviado = true;
-      this.cargando = false;
-      this.incidente.descripcion = '';
+      if (response.success) {
+        this.enviado = true;
+        this.incidente = { area: '', descripcion: '', email: '' }; // Resetear formulario
+      } else {
+        this.error = response.message || 'Error al enviar el reporte';
+      }
     },
     error: (err) => {
-      console.error('Error detallado:', err);
-      this.error = err.error?.message || 'Error al enviar. Por favor intenta nuevamente.';
+      console.error('Error completo:', err);
+      this.error = err.error?.message || 
+                  err.statusText || 
+                  'Error de conexión. Verifica tu red e intenta nuevamente.';
+      if (err.status === 0) {
+        this.error = 'No se pudo conectar al servidor';
+      }
+    },
+    complete: () => {
       this.cargando = false;
     }
   });
