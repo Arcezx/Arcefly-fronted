@@ -32,14 +32,6 @@
 
   <!-- Contenido principal -->
   <div class="content">
-    <!-- Imagen principal (solo en inicio) -->
-    <div class="main-image-container" *ngIf="mostrarImagen">
-      <img src="assets/images/principal.png" alt="Imagen principal" class="main-image" />
-    </div>
-
-    <!-- Contenido dinámico -->
-    <div class="dynamic-content" *ngIf="!mostrarImagen">
        <router-outlet></router-outlet>
     </div>
   </div>
-</div>

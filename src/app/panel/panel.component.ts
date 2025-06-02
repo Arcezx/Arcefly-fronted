@@ -13,26 +13,19 @@ import { ReporteIncidenteComponent } from '../components/reporte-incidente/repor
   imports: [
     CommonModule,
     FormsModule,
-    TablaClientesComponent,
-    TablaViajesComponent,
-    TablaReservasComponent,
-    ReporteIncidenteComponent,
     RouterModule
   ],
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent {
-  mostrarImagen: boolean = true;
-  componenteActivo: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 mostrarInicio(): void {
-  this.mostrarImagen = true;
-  this.componenteActivo = '';
+ 
 }
   // Métodos que coinciden con los usados en la plantilla
   darAltaAdmin() {
@@ -40,19 +33,16 @@ mostrarInicio(): void {
       this.router.navigate(['/login']);
       return;
     }
-    this.mostrarImagen = false;
-    this.componenteActivo = 'altaAdmin';
+
   }
 
 mostrarViajes() {
-  this.router.navigate(['panel/viajes']);
+  this.router.navigate(['panel/viajes']); 
 }
 
 mostrarClientes() {
   this.router.navigate(['panel/clientes']);
 }
-
-
 
 mostrarReservas() {
   this.router.navigate(['panel/reservas']);
@@ -63,8 +53,7 @@ mostrarReservas() {
       this.router.navigate(['/login']);
       return;
     }
-    this.mostrarImagen = false;
-    this.componenteActivo = 'reporte'; // Esto activará el componente de reporte
+
   }
 
   cerrarSesion() {
