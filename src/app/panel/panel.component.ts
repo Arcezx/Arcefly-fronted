@@ -48,13 +48,13 @@ mostrarReservas() {
   this.router.navigate(['panel/reservas']);
 }
 
-  generarReporte() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
+generarReporte() {
+  if (!this.authService.isLoggedIn()) {
+    this.router.navigate(['/login']);
+    return;
   }
+  this.router.navigate(['panel/reporte']); // Navega a la ruta hija
+}
 
   cerrarSesion() {
     this.authService.logout();
