@@ -3,12 +3,12 @@ export interface Viaje {
   origen: string;
   destino: string;
   fechaSalida: string | Date;
-  fechaRegreso?: string | Date | null; // Hacerlo opcional y nullable
-  direccion: string; // <--- AÑADIR ESTE CAMPO
+  fechaRegreso?: string | Date | null; 
+  direccion: string; 
   capacidad: number;
   estado: 'PROGRAMADO' | 'REPROGRAMADO' | 'CANCELADO' | 'EMBARCANDO' | 'ATERRIZADO' | 'EN HORA' | 'POR CONFIRMAR' | 'ACTIVO';
   clase: string;
   tipo: string;
-  precio?: number; // Añadir si es necesario
-  descripcion?: string; // Añadir si es necesario
+  precio?: number; 
+  descripcion?: string; 
 }

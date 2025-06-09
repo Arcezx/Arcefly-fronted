@@ -1,5 +1,5 @@
 @use '../../../styles/variables' as v;@use 'sass:color';
-$disabled-color: #cccccc; // Al inicio del archivo
+$disabled-color: #cccccc; 
 .reporte-container {
   max-width: 600px;
   margin: 0 auto;

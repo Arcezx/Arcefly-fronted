@@ -6,7 +6,6 @@ import { Cliente } from '../models/cliente.model';
   standalone: true
 })
 export class FiltroClientePipe implements PipeTransform {
-// src/app/pipes/filtro-cliente.pipe.ts
 transform(clientes: Cliente[], texto: string, tipo: string): Cliente[] {
   if (!clientes) return [];
   if (!texto && !tipo) return clientes;

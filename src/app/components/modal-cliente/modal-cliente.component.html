@@ -7,7 +7,6 @@
 
     <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="modal-form">
       <div class="form-grid">
-        <!-- Fila 1: Nombre -->
         <div class="form-group">
           <label>
             Nombre <span class="required">*</span>
@@ -22,7 +21,6 @@
           </div>
         </div>
 
-        <!-- Fila 2: Email -->
         <div class="form-group">
           <label>
             Email <span class="required">*</span>
@@ -37,7 +35,6 @@
           </div>
         </div>
 
-        <!-- Fila 3: Contraseña -->
         <div class="form-group">
           <label>
             Contraseña <span *ngIf="!esEdicion" class="required">*</span>
@@ -59,7 +56,6 @@
           </div>
         </div>
 
-        <!-- Fila 4: Tipo y Estado -->
         <div class="form-row">
           <div class="form-group">
             <label>
@@ -89,7 +85,6 @@
         </div>
       </div>
 
-      <!-- Acciones -->
       <div class="form-actions">
         <button type="button" class="btn-secondary" (click)="cerrar()">Cancelar</button>
         <button type="submit" class="btn-primary" [disabled]="formulario.invalid">

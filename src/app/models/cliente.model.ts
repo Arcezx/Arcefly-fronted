@@ -5,5 +5,5 @@ export interface Cliente {
   password?: string;
   tipo: 'ESTANDAR' | 'PREMIUM';
   estado: 'ACTIVO' | 'INACTIVO';
-  telefono?: string; // Opcional
+  telefono?: string; 
 }

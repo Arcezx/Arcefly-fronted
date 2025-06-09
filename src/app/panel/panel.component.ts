@@ -27,7 +27,6 @@ export class PanelComponent {
 mostrarInicio(): void {
  
 }
-  // Métodos que coinciden con los usados en la plantilla
   darAltaAdmin() {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
@@ -53,7 +52,7 @@ generarReporte() {
     this.router.navigate(['/login']);
     return;
   }
-  this.router.navigate(['panel/reporte']); // Navega a la ruta hija
+  this.router.navigate(['panel/reporte']);
 }
 
   cerrarSesion() {

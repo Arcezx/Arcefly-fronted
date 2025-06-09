@@ -13,19 +13,19 @@
   align-items: center;
   z-index: 1000;
   animation: fadeIn 0.3s ease-out;
-  overflow: hidden; /* Elimina cualquier scroll en el overlay */
+  overflow: hidden; 
 
   .modal-container {
     background: v.$white;
     border-radius: v.$border-radius-lg;
     box-shadow: v.$shadow-lg;
     width: 500px;
-    max-width: calc(100% - 40px); /* Asegura espaciado a los lados */
+    max-width: calc(100% - 40px); 
     max-height: 90vh;
-    overflow-y: auto; /* Solo scroll vertical si es necesario */
+    overflow-y: auto; 
     animation: slideIn 0.3s ease-out;
-    margin: 20px; /* Espaciado externo uniforme */
-    padding: 0; /* Reset del padding para control interno */
+    margin: 20px; 
+    padding: 0;
 
     .modal-header {
       padding: v.$spacing-xl v.$spacing-xxl;
@@ -80,7 +80,7 @@
 
         .form-group {
           flex: 1;
-          min-width: 0; /* Previene overflow */
+          min-width: 0; 
         }
       }
 

@@ -197,12 +197,9 @@ button {
     transform: rotate(360deg);
   }
  }
-/* login.component.scss */
 
-/* Aquí agregamos la imagen de fondo solo para el login */
 .login-container {
   background-image: url('/assets/login-background.jpg');
   background-size: cover;
   background-position: center;
-  height: 100vh;  /* Que cubra toda la pantalla */
 }

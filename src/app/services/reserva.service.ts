@@ -120,7 +120,7 @@ cancelarReserva(idReserva: number, usuarioId: number): Observable<Reserva> {
     return this.http.get<boolean>(
       `${this.apiUrl}/validar-asiento?idViaje=${idViaje}&asiento=${asiento}`
     ).pipe(
-      catchError(() => of(true)) // En caso de error, considerar como disponible
+      catchError(() => of(true)) 
     );
   }
 
@@ -128,7 +128,7 @@ cancelarReserva(idReserva: number, usuarioId: number): Observable<Reserva> {
     return this.http.get<boolean>(
       `${this.apiUrl}/existe?idViaje=${idViaje}&idUsuario=${idUsuario}`
     ).pipe(
-      catchError(() => of(false)) // En caso de error, considerar como no existente
+      catchError(() => of(false)) 
     );
   }
 }

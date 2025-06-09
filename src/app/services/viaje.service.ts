@@ -13,7 +13,6 @@ export class ViajeService {
   private apiUrl = `${environment.apiBaseUrl}/api/viajes`;
   private viajesUpdatedSource = new Subject<void>();
   
-  // Observable para que los componentes se suscriban
   viajesUpdated$ = this.viajesUpdatedSource.asObservable();
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}

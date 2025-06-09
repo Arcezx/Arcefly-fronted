@@ -12,11 +12,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const toastr = inject(ToastrService);
 
-  // Solo modificar requests a nuestra API
   if (req.url.startsWith(environment.apiBaseUrl)) {
     const user = authService.currentUser;
     
-    // Clonar la request para añadir headers
     const authReq = req.clone({
       setHeaders: {
         'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ enviarIncidente(data: any): Observable<any> {
   const headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest' // Ayuda con algunos proxies
+    'X-Requested-With': 'XMLHttpRequest' 
   });
   
   return this.http.post(`${environment.apiBaseUrl}/api/incidentes`, data, { 

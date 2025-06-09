@@ -41,8 +41,8 @@ export class ModalClienteComponent implements OnInit, OnChanges {
     nombre: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.minLength(6)]],
-    tipo: ['', Validators.required],  // Cambiado a vacío en lugar de 'ESTANDAR'
-    estado: ['', Validators.required] // Cambiado a vacío en lugar de 'ACTIVO'
+    tipo: ['', Validators.required],  
+    estado: ['', Validators.required] 
   });
   }
 
@@ -51,7 +51,7 @@ export class ModalClienteComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
   if (this.cliente) {
     this.esEdicion = true;
-    this.formulario.reset({  // Usamos reset en lugar de patchValue
+    this.formulario.reset({ 
       id: this.cliente.id,
       nombre: this.cliente.nombre,
       email: this.cliente.email,
@@ -90,7 +90,7 @@ export class ModalClienteComponent implements OnInit, OnChanges {
 
   const formValue = this.formulario.getRawValue();
   
-  // Solo enviar password si no está vacío (en modo edición)
+  
   if (this.esEdicion && !formValue.password) {
     delete formValue.password;
   }

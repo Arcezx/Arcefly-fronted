@@ -9,7 +9,7 @@
   background-color: #f5f5f5;
 }
 :host {
-  pointer-events: none; // 👈 Esto permite que clics pasen a lo de abajo si el componente persiste por error
+  pointer-events: none; 
 }
 
 .login-wrapper {

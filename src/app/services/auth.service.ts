@@ -68,7 +68,6 @@ export class AuthService {
     sessionStorage.removeItem('user');
   }
 
-  // Método para verificar roles (útil para mostrar/ocultar elementos en UI)
   hasRole(role: string): boolean {
     return this.userRole === role;
   }

@@ -39,7 +39,7 @@ enviarReporte() {
     next: (response: any) => {
       if (response.success) {
         this.enviado = true;
-        this.incidente = { area: '', descripcion: '', email: '' }; // Resetear formulario
+        this.incidente = { area: '', descripcion: '', email: '' }; 
       } else {
         this.error = response.message || 'Error al enviar el reporte';
       }

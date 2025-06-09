@@ -1,4 +1,4 @@
-@use '../../styles.scss' as *;  // Esta debe ser la primera línea
+@use '../../styles.scss' as *;  
 @use 'variables' as v;
 @use 'sass:color';
 :root {
@@ -43,7 +43,6 @@
   100% { background-position: 500px 0; }
 }
 
-/* Estilos base */
 body {
   margin: 0;
   padding: 0;
@@ -104,7 +103,7 @@ body {
 
 .sidebar {
   position: fixed;
-  top: 60px; /* Justo debajo del header */
+  top: 60px; 
   left: 0;
   width: 440px;
   height: calc(100vh - 60px);
@@ -180,7 +179,7 @@ body {
 .content {
   margin-left: 440px;
   padding: 25px;
-  padding-top: 80px; /* Header height + espacio */
+  padding-top: 80px; 
   min-height: calc(100vh - 80px);
   background-color: var(--bg-color);
 }

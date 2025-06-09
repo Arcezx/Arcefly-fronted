@@ -30,7 +30,6 @@ export class ClienteService {
   }
 
 crearCliente(cliente: any): Observable<Cliente> {
-  // Asegurarse de que el estado tenga un valor por defecto
   const clienteData = {
     ...cliente,
     estado: cliente.estado || 'ACTIVO'

@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([authInterceptor]) // Ahora usa la función interceptor
+      withInterceptors([authInterceptor]) 
     ),
     provideAnimations(),
     provideLottieOptions({ 

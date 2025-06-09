@@ -9,14 +9,12 @@ export class FiltroReservaPipe implements PipeTransform {
     if (!reservas) return [];
     
     return reservas.filter(reserva => {
-      // Filtro por texto
       const textoMatch = !texto || 
         reserva.idReserva.toString().includes(texto) ||
         reserva.idViaje.toString().includes(texto) ||
         reserva.idUsuario.toString().includes(texto) ||
         reserva.asiento.toLowerCase().includes(texto.toLowerCase());
       
-      // Filtro por estado
       const estadoMatch = !estado || reserva.estado === estado;
       
       return textoMatch && estadoMatch;

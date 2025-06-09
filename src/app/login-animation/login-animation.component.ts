@@ -43,6 +43,6 @@ export class LoginAnimationComponent {
   };
 
   handleAnimationComplete() {
-    this.animationFinished.emit(); // ✅ Se emite solo cuando termina la animación real
+    this.animationFinished.emit(); 
   }
 }

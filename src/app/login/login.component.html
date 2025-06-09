@@ -1,10 +1,8 @@
-<!-- Animación de entrada (se muestra si showAnimation está activo) -->
 <app-login-animation 
   *ngIf="showAnimation" 
   (animationFinished)="onAnimationFinished()"
 ></app-login-animation>
 
-<!-- Formulario de login, oculto cuando showAnimation está activo -->
 <div class="login-container" *ngIf="!showAnimation">
   <div class="login-wrapper">
     <div class="login-image">
@@ -45,13 +43,11 @@
 
         <button type="submit" [disabled]="isLoading">Ingresar</button>
 
-        <!-- Spinner de carga -->
         <div *ngIf="isLoading" class="loading">
           <div class="spinner"></div>
           <p>Cargando...</p>
         </div>
 
-        <!-- Mensaje de error -->
         <p *ngIf="message" class="message">{{ message }}</p>
       </form>
     </div>
